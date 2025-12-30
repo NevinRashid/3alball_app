@@ -10,12 +10,12 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Maintenance check
-if (file_exists($maintenance = __DIR__.'/../3albalapp.com/3albalapp/storage/framework/maintenance.php')) {
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
 // Autoload Laravel dependencies
-require __DIR__.'/../3albalapp/vendor/autoload.php';
-$app = require_once __DIR__.'/../3albalapp/bootstrap/app.php';
+require __DIR__.'/../vendor/autoload.php';
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
 $app->handleRequest(Request::capture());
