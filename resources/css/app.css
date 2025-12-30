@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base font setup */
+@layer base {
+  html {
+    font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+      'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  }
+}
+
+/* Theme transitions */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+body.dark {
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+
+
+
+/* Optional: Add your custom fonts here */
+@layer base {
+  html {
+    font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+      'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  }
+}
+
+/* Optional: Light/Dark theme transitions */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Example: Custom body styling per theme */
+body.light {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+body.dark {
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+/* You can add custom utility classes or override styles here */
