@@ -8,12 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Store extends Authenticatable
 {
     protected $fillable = [
-        'store_name',
-        'email',
-        'password',
-        'phone',
-        'address',
-    ];
+    'store_name',
+    'email',
+    'password',
+    'phone',
+    'address',
+    'facebook',
+    'instagram',
+    'whatsapp',
+    'logo',
+    'theme',
+    'status',
+];
 
     protected $hidden = [
         'password',

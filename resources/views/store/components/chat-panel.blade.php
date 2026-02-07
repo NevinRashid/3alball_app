@@ -57,10 +57,10 @@
                     const isStore = msg.sender === 'store';
                     html += `
                     <div class="flex ${isStore ? 'justify-end' : 'justify-start'}">
-                        <div class="max-w-xs px-4 py-2 rounded-2xl shadow-md ${isStore ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}">
+                        <div class="chat-bubble max-w-xs px-4 py-2 rounded-2xl shadow-md ${isStore ? 'chat-store' : 'chat-customer'}">
                             ${msg.message ? `<p class="text-sm mb-1">${msg.message}</p>` : ''}
                             ${msg.image ? `<a href="/storage/${msg.image}" target="_blank"><img src="/storage/${msg.image}" class="w-32 h-auto rounded-lg border mt-1"></a>` : ''}
-                            <small class="block text-[10px] text-gray-300 mt-1 text-right">${new Date(msg.created_at).toLocaleString()}</small>
+                            <small class="chat-time block text-[10px] mt-1 text-right">
                         </div>
                     </div>`;
                 });

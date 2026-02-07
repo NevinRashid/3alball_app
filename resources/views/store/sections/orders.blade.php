@@ -1,5 +1,5 @@
 <!-- 🧾 Orders Section -->
-<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+<div class="panel bg-white p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
   <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-6">📦 Orders</h2>
 
   @if ($orders->isEmpty())
@@ -7,7 +7,10 @@
   @else
     <!-- Filters -->
     <div class="mb-4 flex flex-wrap gap-4">
-      <select onchange="filterOrders()" id="statusFilter" class="px-4 py-2 border rounded text-sm">
+<select onchange="filterOrders()" id="statusFilter"
+  class="px-4 py-2 rounded-lg text-sm
+         border border-gray-300 shadow-sm
+         focus:outline-none focus:ring-2 focus:ring-blue-500">
         <option value="">All Statuses</option>
         <option value="order_placed">Order Placed</option>
         <option value="order_packed">Order Packed</option>
@@ -15,12 +18,15 @@
         <option value="delivered">Delivered</option>
         <option value="rejected">Rejected</option>
       </select>
-      <input type="date" id="dateFilter" onchange="filterOrders()" class="px-4 py-2 border rounded text-sm">
+<input type="date" id="dateFilter" onchange="filterOrders()"
+  class="px-4 py-2 rounded-lg text-sm
+         border border-gray-300 shadow-sm
+         focus:outline-none focus:ring-2 focus:ring-blue-500">
     </div>
 
     <!-- Order Cards -->
     @foreach ($orders as $order)
-      <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-5 mb-5 shadow-sm">
+<div class="order-card bg-white border border-gray-200 rounded-xl p-5 mb-5 shadow-sm">
         <div class="flex justify-between items-start mb-2">
           <div>
             <div class="text-sm text-gray-500 dark:text-gray-400">Order #{{ $order->id }}</div>
@@ -40,7 +46,7 @@
                 </select>
               </form>
             @else
-              <span class="text-xs text-gray-500 italic">Not editable</span>
+<span class="text-xs text-gray-500 dark:text-gray-300 italic">Not editable</span>
             @endif
 
             @php
@@ -61,7 +67,10 @@
           </div>
         </div>
 
-        <button onclick="toggleDetails('{{ $order->id }}')" class="text-sm text-blue-600 hover:underline mt-2">View Details</button>
+<button onclick="toggleDetails('{{ $order->id }}')"
+  class="text-sm text-blue-600 dark:text-blue-400 hover:underline mt-2">
+  View Details
+</button>
 
         <div id="order-details-{{ $order->id }}" class="mt-4 hidden">
           <!-- Extra Info -->
@@ -72,8 +81,8 @@
 
           <!-- Items Table -->
           <div class="mt-2">
-            <table class="min-w-full text-sm">
-              <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+<table class="dark-table min-w-full text-sm">
+<thead class="bg-gray-100 text-gray-600">
                 <tr>
                   <th class="p-2">Product</th>
                   <th class="p-2">Qty</th>

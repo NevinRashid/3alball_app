@@ -3,16 +3,17 @@
 @else
   <div class="space-y-4">
     @foreach ($orders as $order)
-      <div class="p-4 bg-white shadow rounded flex justify-between items-center">
-        <div>
-          <div class="font-semibold">Order #{{ $order->id }}</div>
-          <div class="text-sm text-gray-500">{{ $order->recipient_name }} — {{ $order->recipient_phone }}</div>
-        </div>
-        <div class="flex items-center gap-2">
-          <span id="new-count-{{ $order->id }}" class="text-xs bg-red-500 text-white rounded-full px-2 hidden"></span>
-          <a href="javascript:void(0)" onclick="openChatPanel('{{ $order->id }}')" class="text-blue-600 hover:underline">Open Chat</a>
-        </div>
-      </div>
+      <div class="message-card p-4 bg-white dark:bg-gray-700/40 border border-gray-200 dark:border-gray-600/30 shadow rounded-xl flex justify-between items-center">
+  <div class="text-gray-800 dark:text-gray-100">
+    <div class="font-semibold">Order #{{ $order->id }}</div>
+    <div class="text-sm text-gray-500 dark:text-gray-300">{{ $order->recipient_name }} — {{ $order->recipient_phone }}</div>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <span id="new-count-{{ $order->id }}" class="text-xs bg-red-500 text-white rounded-full px-2 hidden"></span>
+    <a href="javascript:void(0)" onclick="openChatPanel('{{ $order->id }}')" class="text-blue-600 dark:text-blue-400 hover:underline">Open Chat</a>
+  </div>
+</div>
     @endforeach
   </div>
 @endif
@@ -57,7 +58,7 @@
                     const isStore = msg.sender === 'store';
                     html += `
                     <div class="flex ${isStore ? 'justify-end' : 'justify-start'}">
-                        <div class="max-w-xs md:max-w-sm lg:max-w-md px-4 py-2 rounded-2xl shadow-md relative ${isStore ? 'bg-blue-600 text-white rounded-br-none' : 'bg-gray-200 text-gray-800 rounded-bl-none'}">
+                        <div class="chat-bubble max-w-xs md:max-w-sm lg:max-w-md px-4 py-2 rounded-2xl shadow-md relative ${isStore ? 'chat-store bg-blue-600 text-white rounded-br-none' : 'chat-other bg-gray-200 text-gray-800 rounded-bl-none'}">
                             ${msg.message ? `<p class="text-sm mb-1">${msg.message}</p>` : ''}
                             ${msg.image ? `<a href="/storage/${msg.image}" target="_blank"><img src="/storage/${msg.image}" class="w-32 h-auto rounded-lg border mt-1"></a>` : ''}
                             <small class="absolute bottom-1 right-2 text-[10px] text-gray-300">${new Date(msg.created_at).toLocaleString()}</small>
