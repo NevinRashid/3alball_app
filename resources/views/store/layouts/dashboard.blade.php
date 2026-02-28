@@ -25,10 +25,10 @@
 {{-- ✅ Welcome Header --}}
 <div class="flex items-center justify-between bg-white dark:bg-gray-800 p-5 rounded-xl shadow mb-6">
   <div>
-    <div class="text-xl font-semibold text-gray-800 dark:text-white mb-1">
+<div class="text-xl font-semibold text-gray-800 dark:text-white mb-1">
       <span class="wave">👋</span> {{ __('dashboard.welcome') }} {{ $store->store_name ?? 'Store' }}
     </div>
-    <div class="flex flex-wrap text-sm text-gray-500 dark:text-gray-300 gap-4">
+<div class="flex flex-wrap text-sm text-gray-600 dark:text-gray-200 gap-4">
       <div>
         📅 <span>Membership started:</span>
         {{ \Carbon\Carbon::parse($store->created_at)->format('Y-m-d') }}

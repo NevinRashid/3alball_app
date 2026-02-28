@@ -68,7 +68,7 @@
         <img src="{{ asset('images/3albal-removebg-preview.png') }}" alt="3albal Logo" class="h-10 md:h-10 animate-logo-spin">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-6 fadeIn">Store Panel Login</h2>
 
-            <form method="POST" action="/store-login">
+            <form id="storeLoginForm" method="POST" action="/store-login">
                 @csrf
 
                 <!-- Email Input -->
@@ -77,8 +77,9 @@
     <input type="email" name="email" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 placeholder-gray-500" placeholder="Enter your email" required>
 </div>
 
+<div class="space-y-3">
 <!-- Password Input -->
-<div class="mb-6 relative">
+<div class="relative">
     <label for="password" class="block mb-2 text-lg text-gray-700">Password</label>
     <input type="password" id="password" name="password" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 placeholder-gray-500" placeholder="Enter your password" required>
 
@@ -88,10 +89,24 @@
     </button>
 </div>
 
+<!-- Error Message -->
+<div id="login-error"
+     class="hidden px-5 py-4 bg-red-50 border border-red-200 rounded-lg text-center shadow-md">
+    
+    <div class="text-red-700 font-semibold text-sm mb-1">
+        Login Failed / فشل تسجيل الدخول
+    </div>
+    <div id="login-error-msg"
+         class="text-red-600 text-sm leading-snug whitespace-pre-line">
+    </div>
+</div>
+
+
 <!-- Submit Button -->
 <button type="submit" class="w-full py-3 bg-gradient-to-r from-teal-500 to-blue-600 text-black rounded-lg shadow-lg transform hover:scale-105 transition-all focus:outline-none focus:ring-4 focus:ring-teal-300 hover:bg-teal-600">
     Login
 </button>
+</div>
 <!-- Submit Button -->
 <!--<button type="submit" class="w-full py-3 bg-gradient-to-r from-teal-500 to-blue-600 text-white rounded-lg shadow-lg transform hover:scale-105 transition-all focus:outline-none focus:ring-4 focus:ring-teal-300 hover:bg-teal-600">
     Login
@@ -124,6 +139,63 @@
                 toggleIcon.classList.add("fa-eye");
             }
         }
+
+    const form = document.getElementById('storeLoginForm');
+    const box = document.getElementById('login-error');
+    const msg = document.getElementById('login-error-msg');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // ✅ NO PAGE RELOAD
+
+        box.classList.add('hidden');
+        msg.textContent = '';
+
+        const formData = new FormData(form);
+
+        const res = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': formData.get('_token'),
+            },
+            body: formData
+        });
+
+        // ✅ success -> redirect
+        if (res.ok) {
+            const data = await res.json();
+            if (data.redirect) window.location.href = data.redirect;
+            return;
+        }
+
+        let data = {};
+        try { data = await res.json(); } catch (err) {}
+
+        box.classList.remove('hidden');
+
+        // ✅ Validation errors (422) from Laravel validator
+        if (res.status === 422 && data.errors) {
+            // show first error bilingual-ish (Laravel default is English unless you localize validation)
+            const firstKey = Object.keys(data.errors)[0];
+            const firstMsg = data.errors[firstKey][0];
+            msg.textContent = `${firstMsg}\n${translateValidation(firstMsg)}`;
+            return;
+        }
+
+        // ✅ Custom errors (401/403)
+        msg.textContent = data.message || "Something went wrong.\nحدث خطأ. حاول مرة أخرى";
+    });
+
+    // Tiny helper so required/email errors also appear bilingual without changing Laravel validation files
+    function translateValidation(enMsg) {
+        const m = enMsg.toLowerCase();
+
+        if (m.includes('email') && m.includes('required')) return 'البريد الإلكتروني مطلوب';
+        if (m.includes('password') && m.includes('required')) return 'كلمة المرور مطلوبة';
+        if (m.includes('email') && m.includes('valid')) return 'أدخل بريدًا إلكترونيًا صحيحًا';
+        return 'يرجى التحقق من البيانات المدخلة';
+    }
     </script>
 
 </body>
